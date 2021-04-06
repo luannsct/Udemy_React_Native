@@ -10,15 +10,31 @@ export default (props) => {
     return(
         <Stack.Navigator 
             initialRouteName="TelaA"
-            screenOptions={{headerShown: true}}
-        >
+            screenOptions={{headerShown: true}}>
             <Stack.Screen 
                 name="TelaA"
-                options={{title: 'informações iniciais'}}
-                component={TelaA}
-            />
-            <Stack.Screen name="telaB" component={TelaB}/>
-            <Stack.Screen name="telaC" component={TelaC}/>
+                options={{title: 'informações iniciais'}}>
+                    {props =>(
+                    <PassoStack {...props} avancar="TelaB">
+                        <TelaA/>
+                    </PassoStack>
+                        )}
+            </Stack.Screen>
+            <Stack.Screen name="TelaB">
+                {props => (
+                   <PassoStack {...props} avancar="TelaC">
+                       <TelaB/>
+                   </PassoStack>
+                 )}
+             </Stack.Screen>
+
+            <Stack.Screen name="TelaC">
+                {props => (
+                   <PassoStack {...props} voltar avancar="TelaC">
+                       <TelaC {...props}/>
+                   </PassoStack>
+                )}
+            </Stack.Screen>
         </Stack.Navigator>
     )
 }
